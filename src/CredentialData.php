@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Waglpz\Webapp\Security;
 
-final class UserAuthData
+final class CredentialData
 {
     private string $username;
     private string $passwordHash;

@@ -39,6 +39,7 @@ Szenario: Basic Authentication
     Then: `Waglpz\Webapp\Security\Authenticator::authenticate(ServerRequestInterface) returns boolean true
 ```
 Example PHP code
+
 ```php
 $users = [
     [
@@ -47,8 +48,8 @@ $users = [
         'password' => 'xxxxxx123',
     ],
 ];
-$authDataAdapter = new \Waglpz\Webapp\Security\InMemoryUserAuthData($users);
-$authenticator = new \Waglpz\Webapp\Security\ApiBasicAuthenticator($authDataAdapter);
+$authDataAdapter = new \Waglpz\Webapp\Security\CredentialDataAdapterInMemory($users);
+$authenticator = new \Waglpz\Webapp\Security\AuthenticatorBasic($authDataAdapter);
 
 /*
  * $request contains valid user "tester@akme.com" and password "xxxxxx123"
@@ -76,6 +77,7 @@ Szenario: Find User Role
 ```
 
 Example PHP code
+
 ```php
 
 $users = [
@@ -85,7 +87,7 @@ $users = [
         'password' => 'xxxxxx123',
     ],
 ];
-$authDataAdapter = new \Waglpz\Webapp\Security\InMemoryUserAuthData($users);
+$authDataAdapter = new \Waglpz\Webapp\Security\CredentialDataAdapterInMemory($users);
 $rolesFinder = new \Waglpz\Webapp\Security\UserAuthRolesProvider($authDataAdapter);
 
 $roles = $rolesFinder->findRole('tester@akme.com');
@@ -108,6 +110,7 @@ Szenario: Secure the Route by Firewall
 ```
 
 Example PHP code
+
 ```php
 
 $rules = [
@@ -120,7 +123,7 @@ $users = [
         'password' => 'xxxxxx123',
     ],
 ];
-$authDataAdapter = new \Waglpz\Webapp\Security\InMemoryUserAuthData($users);
+$authDataAdapter = new \Waglpz\Webapp\Security\CredentialDataAdapterInMemory($users);
 $rolesFinder = new \Waglpz\Webapp\Security\UserAuthRolesProvider($authDataAdapter);
 
 $roles = $rolesFinder->findRole('tester@akme.com');

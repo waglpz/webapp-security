@@ -6,12 +6,12 @@ namespace Waglpz\Webapp\Security;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-final class ApiBasicAuthenticator implements Authenticator
+final class AuthenticatorBasic implements Authenticator
 {
-    private UserAuthDataAdapter $authDataAdapter;
+    private CredentialDataAdapter $authDataAdapter;
     private ?string $username;
 
-    public function __construct(UserAuthDataAdapter $authDataAdapter)
+    public function __construct(CredentialDataAdapter $authDataAdapter)
     {
         $this->authDataAdapter = $authDataAdapter;
     }
@@ -26,7 +26,7 @@ final class ApiBasicAuthenticator implements Authenticator
             return false;
         }
 
-        $foundUserAuthData = $this->authDataAdapter->fetchByUsername($username);
+        $foundUserAuthData = $this->authDataAdapter->fetch($username);
 
         if ($foundUserAuthData === null) {
             return false;

@@ -6,7 +6,7 @@ namespace Waglpz\Webapp\Security;
 
 use PDO;
 
-final class InDbUserAuthData implements UserAuthDataAdapter
+final class CredentialDataAdapterInDb implements CredentialDataAdapter
 {
     private PDO $pdo;
     private string $lookUpStatement;
@@ -29,10 +29,14 @@ SQL;
         $this->pdo = $pdo;
     }
 
-    public function fetchByUsername(string $username): ?UserAuthData
+    public function fetch(?string $clue = null): ?CredentialData
     {
+        if ($clue === null) {
+            return null;
+        }
+
         $params = [
-            'username' => $username,
+            'username' => $clue,
             'currentTime' => \date('Y-m-d H:i:s'),
         ];
 
@@ -43,9 +47,9 @@ SQL;
         if (
             \is_array($foundUserData)
             && isset($foundUserData['username'], $foundUserData['passwordHash'], $foundUserData['role'])
-            && \strcasecmp((string) $foundUserData['username'], $username) === 0
+            && \strcasecmp((string) $foundUserData['username'], $clue) === 0
         ) {
-            return new UserAuthData($foundUserData);
+            return new CredentialData($foundUserData);
         }
 
         return null;

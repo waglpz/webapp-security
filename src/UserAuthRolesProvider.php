@@ -6,11 +6,11 @@ namespace Waglpz\Webapp\Security;
 
 final class UserAuthRolesProvider implements UserRolesProvider
 {
-    private UserAuthDataAdapter $authDataAdapter;
+    private CredentialDataAdapter $credentialDataAdapter;
 
-    public function __construct(UserAuthDataAdapter $authDataAdapter)
+    public function __construct(CredentialDataAdapter $credentialDataAdapter)
     {
-        $this->authDataAdapter = $authDataAdapter;
+        $this->credentialDataAdapter = $credentialDataAdapter;
     }
 
     /** @inheritDoc */
@@ -20,12 +20,12 @@ final class UserAuthRolesProvider implements UserRolesProvider
             return [Role::ROLE_NOT_AUTHENTICATED];
         }
 
-        $foundUserAuthData = $this->authDataAdapter->fetchByUsername($username);
+        $credentialData = $this->credentialDataAdapter->fetch($username);
 
-        if ($foundUserAuthData === null) {
+        if ($credentialData === null) {
             return [Role::ROLE_NOT_AUTHENTICATED];
         }
 
-        return $foundUserAuthData->roles();
+        return $credentialData->roles();
     }
 }
