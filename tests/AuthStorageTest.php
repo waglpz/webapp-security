@@ -27,8 +27,7 @@ class AuthStorageTest extends TestCase
         $this->storage->name    = 'tester';
         $this->storage->picture = '/images/logo.jpg';
         $this->storage->roles   = ['TESTER', 'USER'];
-        /** @phpstan-ignore-next-line */
-        $this->storage->key = 'value';
+        $this->storage->key     = 'value';
 
         self::assertSame('test@test.de', $this->storage->email);
         self::assertSame('test@test.de', $_SESSION['auth_storage']['email']);
@@ -62,7 +61,6 @@ class AuthStorageTest extends TestCase
         self::assertSame('/images/logo.jpg', $_SESSION['auth_storage']['picture']);
         self::assertSame(['TESTER', 'USER'], $this->storage->roles);
         self::assertSame(['TESTER', 'USER'], $_SESSION['auth_storage']['roles']);
-        /** @phpstan-ignore-next-line */
         self::assertSame('value', $this->storage->key);
         self::assertSame('value', $_SESSION['auth_storage']['key']);
     }
@@ -109,6 +107,7 @@ class AuthStorageTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Auth storage already initialized with attribute "id".');
+        /** @noinspection PhpFieldImmediatelyRewrittenInspection */
         $this->storage->id = 'tester1@tester.de';
         /** @noinspection SuspiciousAssignmentsInspection */
         $this->storage->id = 'tester2@tester.de';
@@ -149,14 +148,14 @@ class AuthStorageTest extends TestCase
             'ROLE_2',
             'ROLE_3',
         ];
-        self::assertTrue($this->storage->hasRolle('ROLE_2'));
+        self::assertTrue($this->storage->hasRole('ROLE_2'));
     }
 
     /** @test */
     public function hasOnlyOneRole(): void
     {
         $this->storage->roles = ['ROLE_2'];
-        self::assertTrue($this->storage->hasSingleRolle('ROLE_2'));
+        self::assertTrue($this->storage->hasSingleRole('ROLE_2'));
     }
 
     /** @test */
@@ -167,6 +166,6 @@ class AuthStorageTest extends TestCase
             'ROLE_2',
             'ROLE_3',
         ];
-        self::assertFalse($this->storage->hasSingleRolle('ROLE_2'));
+        self::assertFalse($this->storage->hasSingleRole('ROLE_2'));
     }
 }

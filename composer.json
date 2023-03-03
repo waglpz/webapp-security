@@ -10,13 +10,17 @@
     "apcu-autoloader": true,
     "discard-changes": true,
     "preferred-install": "dist",
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "phpstan/extension-installer": true
+    }
   },
   "bin": [
     "bin/generate-password.php"
   ],
   "require": {
-    "php": "^7.4",
+    "php": "^8.2",
     "ext-apcu": "*",
     "ext-fileinfo": "*",
     "ext-intl": "*",
@@ -61,21 +65,17 @@
   "replace": {
   },
   "scripts": {
-    "waglpz:cs-check": "phpcs -p",
-    "waglpz:cs-fix": "phpcbf -p",
-    "waglpz:test:normal": "phpunit --colors=always tests",
-    "waglpz:generate-password": "php bin/generate-password.php",
-    "waglpz:analyse": [
-      "phpstan analyse --configuration=phpstan.neon bin/ config/ src/ tests/ --level max"
-    ],
-    "waglpz:check:ci": [
-      "@waglpz:check:normal"
-    ],
+    "waglpz:check:ci": [ "@waglpz:check:normal" ],
     "waglpz:check:normal": [
-      "@waglpz:cs-check",
-      "@waglpz:analyse",
+      "@waglpz:code:style:check",
+      "@waglpz:code:analyse",
       "@waglpz:test:normal"
     ],
+    "waglpz:code:analyse": [ "phpstan analyse --configuration=phpstan.neon bin/ config/ src/ tests/ --level max" ],
+    "waglpz:code:style:check": "phpcs -p",
+    "waglpz:code:style:fix": "phpcbf -p",
+    "waglpz:generate:password": "php bin/generate-password.php",
+    "waglpz:test:normal": "phpunit --colors=always tests",
     "post-install-cmd": [
       "cp -n config/firewall.php config/"
     ],

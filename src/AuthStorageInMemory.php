@@ -32,10 +32,7 @@ final class AuthStorageInMemory implements AuthStorage
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function __get(string $name)
+    public function __get(string $name): mixed
     {
         /** @phpstan-ignore-next-line */
         if (! isset($this->{$name})) {
@@ -45,10 +42,7 @@ final class AuthStorageInMemory implements AuthStorage
         return $this->storage[$name];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function __set(string $name, $data): void
+    public function __set(string $name, mixed $data): void
     {
         if (! isset($this->allowed[$name]) || $this->allowed[$name] !== true) {
             throw new \InvalidArgumentException(
@@ -87,13 +81,13 @@ final class AuthStorageInMemory implements AuthStorage
         $this->storage = [];
     }
 
-    public function hasSingleRolle(string $rolle): bool
+    public function hasSingleRole(string $role): bool
     {
-        return $this->hasRolle($rolle) && \count($this->roles) === 1;
+        return $this->hasRole($role) && \count($this->roles) === 1;
     }
 
-    public function hasRolle(string $rolle): bool
+    public function hasRole(string $role): bool
     {
-        return \in_array($rolle, $this->roles, true);
+        return \in_array($role, $this->roles, true);
     }
 }

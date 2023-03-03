@@ -7,16 +7,15 @@ namespace Waglpz\Webapp\Security;
 use InvalidArgumentException;
 
 /**
- * @property array<mixed> $roles
+ * @property array<int,string> $roles
  * @property string       $email
  * @property string       $id
  * @property ?string      $name    = null
  * @property ?string      $picture = null
  */
-final class AuthStoragePHPSession implements AuthStorage
+final class AuthStoragePHPSession extends \stdClass implements AuthStorage
 {
-    /** @return mixed */
-    public function __get(string $name)
+    public function __get(string $name): mixed
     {
         if ($this->__isset($name)) {
             return $_SESSION['auth_storage'][$name];
@@ -42,8 +41,7 @@ final class AuthStoragePHPSession implements AuthStorage
         throw new InvalidArgumentException($message);
     }
 
-    /** @param mixed $data */
-    public function __set(string $name, $data): void
+    public function __set(string $name, mixed $data): void
     {
         /** @noinspection NotOptimalIfConditionsInspection */
         if ($this->__isset($name) && $_SESSION['auth_storage'][$name] !== $data) {
@@ -55,7 +53,7 @@ final class AuthStoragePHPSession implements AuthStorage
 
     public function __isset(string $name): bool
     {
-        return isset($_SESSION['auth_storage'][$name]);
+        return isset($this->$name) || isset($_SESSION['auth_storage'][$name]);
     }
 
     /** @param array<string,mixed> $data */
@@ -71,13 +69,13 @@ final class AuthStoragePHPSession implements AuthStorage
         $_SESSION['auth_storage'] = null;
     }
 
-    public function hasSingleRolle(string $rolle): bool
+    public function hasSingleRole(string $role): bool
     {
-        return $this->hasRolle($rolle) && \count($this->roles) === 1;
+        return $this->hasRole($role) && \count($this->roles) === 1;
     }
 
-    public function hasRolle(string $rolle): bool
+    public function hasRole(string $role): bool
     {
-        return \in_array($rolle, $this->roles, true);
+        return \in_array($role, $this->roles, true);
     }
 }

@@ -14,18 +14,14 @@ namespace Waglpz\Webapp\Security;
 interface AuthStorage
 {
     /**
-     * @return mixed
-     *
      * @throws \InvalidArgumentException
      */
-    public function __get(string $name);
+    public function __get(string $name): mixed;
 
     /**
-     * @param mixed $data
-     *
      * @throws \InvalidArgumentException
      */
-    public function __set(string $name, $data): void;
+    public function __set(string $name, mixed $data): void;
 
     public function __isset(string $name): bool;
 
@@ -34,7 +30,7 @@ interface AuthStorage
 
     public function reset(): void;
 
-    public function hasSingleRolle(string $rolle): bool;
+    public function hasSingleRole(string $role): bool;
 
-    public function hasRolle(string $rolle): bool;
+    public function hasRole(string $role): bool;
 }
