@@ -6,28 +6,17 @@ namespace Waglpz\Webapp\Security;
 
 final class CredentialDataAdapterInMemory implements CredentialDataAdapter
 {
-    /** @var array<array<string,string>> */
-    private array $credentialData;
-
-    /** @param array<array<string,string>> $credentialData */
-    public function __construct(array $credentialData)
+    /** @param array<array<string,string>> $inMemoryData */
+    public function __construct(private array $inMemoryData, private CredentialDataDecoder $dataDecoder)
     {
-        $this->credentialData = $credentialData;
     }
 
-    public function fetch(?string $clue = null): ?CredentialData
+    public function fetch(string|null $clue = null): CredentialData|null
     {
-        $foundUsersData = \array_filter(
-            $this->credentialData,
-            static fn (array $userData): bool => isset($userData['username']) && $userData['username'] === $clue
-        );
-
-        if ($foundUsersData === []) {
+        if ($clue === null || $clue === '') {
             return null;
         }
 
-        $foundUserData = \array_shift($foundUsersData);
-
-        return new CredentialData($foundUserData);
+        return $this->dataDecoder->decode($this->inMemoryData, $clue);
     }
 }

@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Waglpz\Webapp\Security;
 
 if (! \function_exists('Waglpz\Webapp\Security\sortLongestKeyFirst')) {
-    /**
-     * @param array<string,mixed> $assocArray
-     */
+    /** @param array<string,mixed> $assocArray */
     function sortLongestKeyFirst(array &$assocArray): void
     {
         \uksort(
@@ -22,7 +20,7 @@ if (! \function_exists('Waglpz\Webapp\Security\sortLongestKeyFirst')) {
                 }
 
                 return 0;
-            }
+            },
         );
     }
 }

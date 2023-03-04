@@ -8,26 +8,26 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class Firewall implements Firewalled
 {
-    /** @var array<string,array<string>> */
-    private array $regeln;
-
     /**
-     * @param array<string,array<string>> $regeln The key is regex pattern of the route and value as list of
+     * @param array<string,array<string>> $rules The key is regex pattern of the route and value as list of
      *                                            allowed roles
      */
-    public function __construct(array $regeln)
+    public function __construct(private array $rules)
     {
-        $this->regeln = $regeln;
     }
 
-    /** @inheritDoc */
+    /**
+     * @throws Forbidden
+     *
+     * @inheritDoc
+     */
     public function checkRules(ServerRequestInterface $request, array $currentRoles): void
     {
         $uri = $request->getRequestTarget();
 
-        \Waglpz\Webapp\Security\sortLongestKeyFirst($this->regeln);
+        \Waglpz\Webapp\Security\sortLongestKeyFirst($this->rules);
 
-        foreach ($this->regeln as $routePattern => $rollenAllowed) {
+        foreach ($this->rules as $routePattern => $rollenAllowed) {
             if ($uri === '/') {
                 return;
             }
@@ -43,8 +43,8 @@ final class Firewall implements Firewalled
                     return;
                 }
 
-                $matchedRollen = \array_intersect($rollenAllowed, $currentRoles);
-                if (\count($matchedRollen) >= 1) {
+                $matchedRoles = \array_intersect($rollenAllowed, $currentRoles);
+                if (\count($matchedRoles) >= 1) {
                     return;
                 }
 

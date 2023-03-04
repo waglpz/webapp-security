@@ -9,36 +9,41 @@ final class CredentialData
     private string $username;
     private string $passwordHash;
     /** @var array<int, string> */
+    private array $spaces;
+    /** @var array<int, string> */
     private array $roles;
 
-    /** @param array<mixed> $authData */
-    public function __construct(array $authData)
-    {
-        if (! isset($authData['username'], $authData['passwordHash'])) {
+    /**
+     * @param array<int, string>|string $roles
+     * @param array<int, string>|string $spaces
+     */
+    public function __construct(
+        string $emailOrUsername,
+        array|string $roles = [],
+        array|string $spaces = [],
+        string|null $passwordHash = null,
+    ) {
+        if ($emailOrUsername === '') {
             throw new \InvalidArgumentException(
-                'Invalid $authData expected an array with keys username and passwordHash and string as values.'
+                'Invalid $emailOrUsername, expected not empty string.',
             );
         }
 
-        if (! \is_string($authData['username']) || $authData['username'] === '') {
-            throw new \InvalidArgumentException('Invalid $authData[\'username\'] given.');
-        }
+        $this->username = $emailOrUsername;
 
-        $this->username = $authData['username'];
-
-        if (\is_string($authData['role']) && $authData['role'] !== '') {
-            $this->roles = [$authData['role']];
-        } elseif (\is_array($authData['role']) && $authData['role'] !== []) {
-            $this->roles = $authData['role'];
+        if (\is_string($roles)) {
+            $this->roles = $roles === '' ? [] : [$roles];
         } else {
-            throw new \InvalidArgumentException('Invalid $authData[\'role\'] given.');
+            $this->roles = $roles;
         }
 
-        if (! \is_string($authData['passwordHash']) || $authData['passwordHash'] === '') {
-            throw new \InvalidArgumentException('Invalid $authData[\'passwordHash\'] given.');
+        if (\is_string($spaces)) {
+            $this->spaces = $spaces === '' ? [] : [$spaces];
+        } else {
+            $this->spaces = $spaces;
         }
 
-        $this->passwordHash = $authData['passwordHash'];
+        $this->passwordHash = $passwordHash ?? '';
     }
 
     public function username(): string
@@ -50,6 +55,12 @@ final class CredentialData
     public function roles(): array
     {
         return $this->roles;
+    }
+
+    /** @return array<int, string> */
+    public function spaces(): array
+    {
+        return $this->spaces;
     }
 
     public function passwordHash(): string

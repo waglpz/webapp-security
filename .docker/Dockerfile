@@ -13,4 +13,5 @@ RUN if [ ${APPUID} != 0 -a $(getent passwd ${DUSER}) ]; then \
         fi;                                 \
         groupadd -g ${APPUGID} ${DUSER};    \
         useradd -r -l -u ${APPUID} -g ${DUSER} ${DUSER}; \
-    fi;
+        chown -R ${DUSER}:${DUSER} $COMPOSER_HOME;       \
+    fi

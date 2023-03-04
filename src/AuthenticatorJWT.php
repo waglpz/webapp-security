@@ -8,12 +8,10 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class AuthenticatorJWT implements Authenticator
 {
-    private ?string $username;
-    private CredentialDataAdapterJWT $credentialDataAdapter;
+    private string|null $username;
 
-    public function __construct(CredentialDataAdapterJWT $credentialDataAdapter)
+    public function __construct(private readonly CredentialDataAdapterJWT $credentialDataAdapter)
     {
-        $this->credentialDataAdapter = $credentialDataAdapter;
     }
 
     public function authenticate(ServerRequestInterface $request): bool
@@ -29,7 +27,7 @@ final class AuthenticatorJWT implements Authenticator
         return true;
     }
 
-    public function username(): ?string
+    public function username(): string|null
     {
         return $this->username;
     }

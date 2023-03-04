@@ -10,5 +10,5 @@ interface Authenticator
 {
     public function authenticate(ServerRequestInterface $request): bool;
 
-    public function username(): ?string;
+    public function username(): string|null;
 }

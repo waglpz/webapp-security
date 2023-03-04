@@ -8,12 +8,10 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class AuthenticatorBasic implements Authenticator
 {
-    private CredentialDataAdapter $authDataAdapter;
-    private ?string $username;
+    private string|null $username;
 
-    public function __construct(CredentialDataAdapter $authDataAdapter)
+    public function __construct(private readonly CredentialDataAdapter $authDataAdapter)
     {
-        $this->authDataAdapter = $authDataAdapter;
     }
 
     public function authenticate(ServerRequestInterface $request): bool
@@ -41,8 +39,8 @@ final class AuthenticatorBasic implements Authenticator
         return false;
     }
 
-    public function username(): ?string
+    public function username(): string|null
     {
-        return $this->username;
+        return $this->username ?? null;
     }
 }

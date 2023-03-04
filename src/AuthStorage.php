@@ -13,14 +13,10 @@ namespace Waglpz\Webapp\Security;
  */
 interface AuthStorage
 {
-    /**
-     * @throws \InvalidArgumentException
-     */
+    /** @throws \InvalidArgumentException */
     public function __get(string $name): mixed;
 
-    /**
-     * @throws \InvalidArgumentException
-     */
+    /** @throws \InvalidArgumentException */
     public function __set(string $name, mixed $data): void;
 
     public function __isset(string $name): bool;

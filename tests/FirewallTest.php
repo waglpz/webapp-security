@@ -77,10 +77,8 @@ final class FirewallTest extends TestCase
         $firewall->checkRules($request, $rollen);
     }
 
-    /**
-     * @return Generator<mixed>
-     */
-    public function notAllowed(): Generator
+    /** @return Generator<mixed> */
+    public static function notAllowed(): Generator
     {
         yield ['/a', ['/' => [Role::ROLE_NOT_AUTHENTICATED]], []];
         yield ['/a', ['/' => ['ROLLE_A']], ['ROLLE_B']];
@@ -152,10 +150,8 @@ final class FirewallTest extends TestCase
         ];
     }
 
-    /**
-     * @return Generator<mixed>
-     */
-    public function allowed(): Generator
+    /** @return Generator<mixed> */
+    public static function allowed(): Generator
     {
         yield ['/a', ['/a' => [Role::ROLE_NOT_AUTHENTICATED]], [Role::ROLE_NOT_AUTHENTICATED]];
         yield ['/', ['/' => [Role::ROLE_NOT_AUTHENTICATED]], []];

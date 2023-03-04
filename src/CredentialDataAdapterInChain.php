@@ -6,16 +6,12 @@ namespace Waglpz\Webapp\Security;
 
 final class CredentialDataAdapterInChain implements CredentialDataAdapter
 {
-    /** @var CredentialDataAdapter[] */
-    private array $credentialDataAdapters;
-
     /** @param array<CredentialDataAdapter> $credentialDataAdapters */
-    public function __construct(array $credentialDataAdapters)
+    public function __construct(private readonly array $credentialDataAdapters)
     {
-        $this->credentialDataAdapters = $credentialDataAdapters;
     }
 
-    public function fetch(?string $clue = null): ?CredentialData
+    public function fetch(string|null $clue = null): CredentialData|null
     {
         foreach ($this->credentialDataAdapters as $adapter) {
             $fetchedData = $adapter->fetch($clue);

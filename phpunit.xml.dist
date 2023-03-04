@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         testdox="true"
-         colors="true"
-         cacheResult="false"
-         bootstrap="vendor/autoload.php"
-         verbose="true">
-  <coverage processUncoveredFiles="true">
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+        colors="true"
+        displayDetailsOnTestsThatTriggerDeprecations="true"
+        displayDetailsOnTestsThatTriggerErrors="true"
+        displayDetailsOnTestsThatTriggerWarnings="true"
+        bootstrap="vendor/autoload.php"
+        cacheDirectory="var/.phpunit.cache"
+>
+  <coverage>
     <include>
       <directory suffix=".php">./src</directory>
     </include>
     <report>
-      <html outputDirectory=".build-output/coverage"/>
+      <html outputDirectory="var/.build-output/coverage"/>
       <text outputFile="php://stdout" showOnlySummary="true"/>
     </report>
   </coverage>
@@ -31,6 +34,6 @@
     }]'/>
   </php>
   <logging>
-    <junit outputFile=".build-output/junit.xml"/>
+    <junit outputFile="var/.build-output/junit.xml"/>
   </logging>
 </phpunit>

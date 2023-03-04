@@ -6,15 +6,12 @@ namespace Waglpz\Webapp\Security;
 
 final class UserAuthRolesProvider implements UserRolesProvider
 {
-    private CredentialDataAdapter $credentialDataAdapter;
-
-    public function __construct(CredentialDataAdapter $credentialDataAdapter)
+    public function __construct(private readonly CredentialDataAdapter $credentialDataAdapter)
     {
-        $this->credentialDataAdapter = $credentialDataAdapter;
     }
 
     /** @inheritDoc */
-    public function findRole(?string $username): array
+    public function findRole(string|null $username): array
     {
         if (! isset($username)) {
             return [Role::ROLE_NOT_AUTHENTICATED];

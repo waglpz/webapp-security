@@ -18,10 +18,8 @@ final class AuthStorageInMemory implements AuthStorage
     /** @var array<string,mixed> */
     private array $allowed;
 
-    /**
-     * @param mixed[] $allowed
-     */
-    public function __construct(?array $allowed = null)
+    /** @param mixed[] $allowed */
+    public function __construct(array|null $allowed = null)
     {
         $this->allowed = $allowed ?? [
             'roles' => true,
@@ -46,14 +44,14 @@ final class AuthStorageInMemory implements AuthStorage
     {
         if (! isset($this->allowed[$name]) || $this->allowed[$name] !== true) {
             throw new \InvalidArgumentException(
-                \sprintf('Auth storage does not allowed store value named "%s".', $name)
+                \sprintf('Auth storage does not allowed store value named "%s".', $name),
             );
         }
 
         /** @phpstan-ignore-next-line */
         if (isset($this->{$name})) {
             throw new \InvalidArgumentException(
-                \sprintf('Auth storage does not allowed to override existing value named "%s".', $name)
+                \sprintf('Auth storage does not allowed to override existing value named "%s".', $name),
             );
         }
 
@@ -65,9 +63,7 @@ final class AuthStorageInMemory implements AuthStorage
         return isset($this->storage[$name]);
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** @inheritDoc */
     public function assign(array $data): void
     {
         foreach ($data as $name => $value) {
