@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/waglpz/webapp-security/compare/v2.0.1...v2.1.0) (2024-09-02)
+
+
+### Features
+
+* Update PHPUnit XML, enhance webapp security config, bump version ([22bb2cc](https://github.com/waglpz/webapp-security/commit/22bb2cc698cb4c97065508254d6ceb282cddebdb))
+
 ## 2.0.1 (2024-09-02)
 
 ## 2.0.0 (2023-03-20)
