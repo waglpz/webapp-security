@@ -16,7 +16,7 @@ final class CredentialDataDecoderInMemoryDefault implements CredentialDataDecode
             $data,
             static fn ($userData): bool => \is_array($userData)
                 && isset($userData['username'])
-                && $userData['username'] === $clue
+                && $userData['username'] === $clue,
         );
 
         if ($foundUsersData === []) {

@@ -3,5 +3,7 @@
 declare(strict_types=1);
 
 return [
-    '/'                        => ['ROLLE_UNBEKANNT'],
+    '/api/doc' => ['ROLE_NOT_AUTHENTICATED'],
+    '/*'       => ['ROLE_NOT_AUTHENTICATED'],
+    '/'        => ['ROLE_NOT_AUTHENTICATED'],
 ];
