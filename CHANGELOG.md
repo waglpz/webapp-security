@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/waglpz/webapp-security/compare/v2.1.0...v2.1.1) (2026-03-20)
+
+
+### Bug Fixes
+
+* Update version of related package firebase/php-jwt for more security ([18d5740](https://github.com/waglpz/webapp-security/commit/18d5740cacca2504a556a74191d1e5099f542d21))
+
 ## [2.1.0](https://github.com/waglpz/webapp-security/compare/v2.0.1...v2.1.0) (2024-09-02)
 
 

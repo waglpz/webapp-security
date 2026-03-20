@@ -2,7 +2,7 @@
   "name": "waglpz/webapp-security",
   "description": "Web App Security Implementation",
   "license": "MIT",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "type": "library",
   "minimum-stability": "dev",
   "prefer-stable": true,
